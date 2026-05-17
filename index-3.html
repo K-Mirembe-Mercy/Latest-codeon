@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeOn — Build. Solve. Belong.</title>
+<meta name="description" content="CodeOn is a global merit-based coding community. Earn permanent levels, join chapters at your school or workplace, compete in hackathons, and belong to a world-class network of builders.">
+<meta name="keywords" content="CodeOn, coding community, hackathon, coding levels, tech club, coding Uganda, Africa tech, build solve belong, programming community">
+<meta name="author" content="CodeOn">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://codeon.community/">
+
+<!-- Open Graph / Social -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://codeon.community/">
+<meta property="og:title" content="CodeOn — Build. Solve. Belong.">
+<meta property="og:description" content="A global merit-based coding community. Earn levels, join chapters, compete in hackathons. Real proof. Real recognition.">
+<meta property="og:image" content="logo.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CodeOn — Build. Solve. Belong.">
+<meta name="twitter:description" content="Join CodeOn — the coding community built on proof, not promises.">
+
+<!-- JSON-LD Structured Data (SEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CodeOn",
+  "url": "https://codeon.community",
+  "logo": "https://codeon.community/logo.png",
+  "description": "CodeOn is a global merit-based coding community where members earn permanent levels by proving their skills through real projects, hackathons, and contributions.",
+  "email": "codeon.ug@gmail.com",
+  "sameAs": [],
+  "knowsAbout": ["coding", "software development", "hackathons", "programming", "technology education"]
+}
+</script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Inline critical styles for first paint */
+body { background: #07090F; color: #F0F4FF; }
+#splash { position: fixed; inset: 0; z-index: 10000; background: #07090F; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+
+<!-- NOISE OVERLAY -->
+<div class="noise-overlay"></div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lbImg" src="" alt="Gallery Image">
+</div>
+
+<!-- ═══════════════════════════════
+     SPLASH SCREEN
+═══════════════════════════════ -->
+<div id="splash">
+  <img src="logo.png" alt="CodeOn Logo" class="splash-logo">
+  <div class="splash-tagline">Build · Solve · Belong</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- ═══════════════════════════════
+     NAVIGATION
+═══════════════════════════════ -->
+<nav id="mainNav">
+  <div class="nav-brand" onclick="showPage('home')">
+    <img src="logo.png" alt="CodeOn" class="nav-logo">
+    <span class="nav-brand-text">Code<span>On</span></span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" data-page="home" class="active">Home</a></li>
+    <li><a onclick="showPage('about')" data-page="about">About</a></li>
+    <li><a onclick="showPage('levels')" data-page="levels">Levels</a></li>
+    <li><a onclick="showPage('chapters')" data-page="chapters">Chapters</a></li>
+    <li><a onclick="showPage('events')" data-page="events">Events</a></li>
+    <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
+    <li><a onclick="showPage('membership')" data-page="membership">Membership</a></li>
+    <li><a onclick="showPage('contact')" data-page="contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div id="navAuthBtns" style="display:flex;gap:10px;">
+      <button class="btn-login" onclick="openAuthModal('login')">Sign In</button>
+      <button class="btn-signup" onclick="openAuthModal('signup')">Join CodeOn →</button>
+    </div>
+    <div id="userAvatarBtn" class="user-avatar" style="display:none;" onclick="toggleUserMenu()">U</div>
+    <div id="userMenu" class="user-menu">
+      <div class="user-menu-item" onclick="goToDashboard()">📊 My Dashboard</div>
+      <div class="user-menu-item" onclick="showPage('membership'); closeUserMenu()">💳 Subscription</div>
+      <div class="user-menu-divider"></div>
+      <div class="user-menu-item danger" onclick="doLogout()">🚪 Sign Out</div>
+    </div>
+    <button class="hamburger" onclick="openMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mobileNav">
+  <button class="mob-close" onclick="closeMobileNav()">✕</button>
+  <a onclick="showPage('home')">Home</a>
+  <a onclick="showPage('about')">About</a>
+  <a onclick="showPage('levels')">Levels</a>
+  <a onclick="showPage('chapters')">Chapters</a>
+  <a onclick="showPage('events')">Events</a>
+  <a onclick="showPage('gallery')">Gallery</a>
+  <a onclick="showPage('membership')">Membership</a>
+  <a onclick="showPage('contact')">Contact</a>
+  <div class="mob-auth">
+    <button class="btn-login" onclick="openAuthModal('login')">Sign In</button>
+    <button class="btn-signup" onclick="openAuthModal('signup')">Join Now</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     AUTH MODAL
+═══════════════════════════════ -->
+<div id="authModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuthModal()">✕</button>
+    <img src="logo.png" alt="CodeOn" class="modal-logo">
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-tab="login" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="modal-tab" data-tab="signup" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" id="loginEmail" type="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="loginPass" type="password" placeholder="Your password" autocomplete="current-password">
+      </div>
+      <button class="btn-primary-full" id="loginBtn" onclick="doLogin()">Sign In →</button>
+      <div class="modal-divider">or</div>
+      <button class="social-btn" onclick="doGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-switch">Don't have an account? <a onclick="switchAuthTab('signup')">Create one →</a></div>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" class="auth-form" style="display:none;">
+      <div style="margin-bottom:16px;">
+        <div class="form-label" style="margin-bottom:10px;">I am a</div>
+        <div class="member-type-grid">
+          <div class="mtype-card" data-type="highschool" onclick="selectMemberType('highschool')">
+            <span class="mtype-icon">🎒</span>
+            <div class="mtype-name">High School</div>
+            <div class="mtype-price">FREE</div>
+          </div>
+          <div class="mtype-card selected" data-type="university" onclick="selectMemberType('university')">
+            <span class="mtype-icon">🎓</span>
+            <div class="mtype-name">University</div>
+            <div class="mtype-price">$10/trimester</div>
+          </div>
+          <div class="mtype-card" data-type="professional" onclick="selectMemberType('professional')">
+            <span class="mtype-icon">💼</span>
+            <div class="mtype-name">Professional</div>
+            <div class="mtype-price">$50/6 months</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="form-input" id="regName" type="text" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="regEmail" type="email" placeholder="your@email.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="regPass" type="password" placeholder="Min. 6 characters" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">School / University / Company</label>
+        <input class="form-input" id="regChapter" type="text" placeholder="e.g. Makerere University">
+      </div>
+      <button class="btn-primary-full" id="regBtn" onclick="doRegister()">Create My Account →</button>
+      <div class="modal-divider">or</div>
+      <button class="social-btn" onclick="doGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
+        Sign up with Google
+      </button>
+      <div class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Sign in →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     PAYMENT MODAL
+═══════════════════════════════ -->
+<div id="paymentModal" class="modal-overlay payment-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePaymentModal()">✕</button>
+    <img src="logo.png" alt="CodeOn" class="modal-logo">
+    <div class="modal-title">Activate Membership</div>
+    <div class="modal-sub">Secure payment via PesaPal</div>
+    <div class="pay-options">
+      <div class="pay-opt selected" onclick="selectPayOption(this)">
+        <div class="pay-opt-icon">📱</div>
+        <div>
+          <div class="pay-opt-name">Mobile Money</div>
+          <div class="pay-opt-sub">MTN Mobile Money · Airtel Money</div>
+        </div>
+      </div>
+      <div class="pay-opt" onclick="selectPayOption(this)">
+        <div class="pay-opt-icon">💳</div>
+        <div>
+          <div class="pay-opt-name">Card Payment</div>
+          <div class="pay-opt-sub">Visa · Mastercard · Bank Transfer</div>
+        </div>
+      </div>
+    </div>
+    <div class="pay-methods">
+      <span class="pay-method-chip">MTN MoMo</span>
+      <span class="pay-method-chip">Airtel</span>
+      <span class="pay-method-chip">Visa</span>
+      <span class="pay-method-chip">Mastercard</span>
+      <span class="pay-method-chip">Bank</span>
+    </div>
+    <button class="btn-primary-full" style="margin-top:20px;" onclick="proceedToPayment()">Proceed to PesaPal →</button>
+    <div class="modal-divider">Secured by PesaPal · 256-bit encryption</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: HOME
+═══════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-bg-image"></div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="grid-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <div class="pulse"></div>
+        Now Open · Applications 2026
+      </div>
+      <h1 class="display hero-h1">
+        Build.<br>Solve.<br><span class="text-ice">Belong.</span>
+      </h1>
+      <p class="lead hero-lead">
+        CodeOn is the world's most rigorous merit-based coding community. Earn permanent levels. Join chapters. Compete in hackathons. Your proof. Your legacy.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openAuthModal('signup')">Join CodeOn Free →</button>
+        <button class="btn btn-outline" onclick="showPage('levels')">Explore Levels</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">7</div><div class="hstat-lbl">Lifetime Levels</div></div>
+      <div class="hstat"><div class="hstat-num">2×</div><div class="hstat-lbl">Meetings / Month</div></div>
+      <div class="hstat"><div class="hstat-num">∞</div><div class="hstat-lbl">Global Reach</div></div>
+    </div>
+    <div class="scroll-cue">
+      <div class="scroll-line"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Build · Solve · Belong</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> High Schools · Universities · Companies</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Merit-Based Progression</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Real Proof · Real Recognition</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Hackathons · Workshops · Meetings</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Chapters Worldwide</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Build · Solve · Belong</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> High Schools · Universities · Companies</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Merit-Based Progression</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Real Proof · Real Recognition</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Hackathons · Workshops · Meetings</span>
+      <span class="marquee-item"><span class="marquee-dot">◆</span> Chapters Worldwide</span>
+    </div>
+  </div>
+
+  <!-- WHO IS CODEON FOR -->
+  <section class="section">
+    <div class="eyebrow">For Everyone Who Codes</div>
+    <h2 class="display reveal">One community.<br>Every level of<br><span class="text-ice">education.</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;">
+      <div class="card reveal" style="border-top:3px solid #10b981;">
+        <div style="font-size:48px;margin-bottom:20px;">🎒</div>
+        <h3 style="font-family:var(--head);font-size:22px;font-weight:700;margin-bottom:12px;">High School</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;">Start your coding journey early. Chapters in schools across the country. Free to join — all you need is curiosity and drive.</p>
+        <div style="font-family:var(--mono);font-size:22px;color:#10b981;font-weight:700;">FREE</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">to join a chapter</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid var(--ice);">
+        <div style="font-size:48px;margin-bottom:20px;">🎓</div>
+        <h3 style="font-family:var(--head);font-size:22px;font-weight:700;margin-bottom:12px;">University</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;">University chapters are where careers are built. Projects, hackathons, mentorship, and a global network of peers doing the same.</p>
+        <div style="font-family:var(--mono);font-size:22px;color:var(--ice);font-weight:700;">$10</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">per trimester/semester</div>
+      </div>
+      <div class="card reveal" style="border-top:3px solid var(--gold2);">
+        <div style="font-size:48px;margin-bottom:20px;">💼</div>
+        <h3 style="font-family:var(--head);font-size:22px;font-weight:700;margin-bottom:12px;">Professional</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;">Company chapters for professionals. Workshops, industry hackathons, team building, and keeping your edge sharp in a fast-moving field.</p>
+        <div style="font-family:var(--mono);font-size:22px;color:var(--gold2);font-weight:700;">$50</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">per half-year</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin:0 72px;" class="reveal">
+    <div style="padding:40px 32px;text-align:center;border-right:1px solid var(--border);background:var(--glass);">
+      <div style="font-family:var(--head);font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--white),var(--ice));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">7</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;">Lifetime Levels</div>
+    </div>
+    <div style="padding:40px 32px;text-align:center;border-right:1px solid var(--border);background:var(--glass);">
+      <div style="font-family:var(--head);font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--white),var(--ice));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">3</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;">Earned Titles</div>
+    </div>
+    <div style="padding:40px 32px;text-align:center;border-right:1px solid var(--border);background:var(--glass);">
+      <div style="font-family:var(--head);font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--white),var(--ice));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">2×</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;">Monthly Meetings</div>
+    </div>
+    <div style="padding:40px 32px;text-align:center;background:var(--glass);">
+      <div style="font-family:var(--head);font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--white),var(--ice));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;">∞</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;">Global Reach</div>
+    </div>
+  </div>
+
+  <!-- WHAT HAPPENS AT CODEON -->
+  <section class="section">
+    <div class="eyebrow">Community Life</div>
+    <h2 class="display reveal">What happens<br>in CodeOn.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px;">
+      <div class="card reveal" style="background:linear-gradient(135deg,rgba(0,52,200,0.18),rgba(0,198,255,0.07));border-color:var(--border2);">
+        <div style="font-size:40px;margin-bottom:16px;">📅</div>
+        <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">Monthly Meetings</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;">Two meetings every month — one in-person, one online. Free for all members. Structured, productive, and run by the community for the community. No excuses not to show up.</p>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tag">In-Person</span><span class="tag">Online</span><span class="tag" style="border-color:rgba(0,255,136,0.3);color:var(--lime);">Always Free</span>
+        </div>
+      </div>
+      <div class="card reveal" style="background:linear-gradient(135deg,rgba(245,158,11,0.14),rgba(252,211,77,0.06));border-color:rgba(245,158,11,0.25);">
+        <div style="font-size:40px;margin-bottom:16px;">⚡</div>
+        <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">Hackathons</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;">48-hour coding competitions that test everything. Real problems, real stakes, real prizes. Hackathons are the fastest way to level up in CodeOn — show what you can build under pressure.</p>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tag" style="border-color:rgba(245,158,11,0.3);color:var(--gold2);">48 Hours</span><span class="tag" style="border-color:rgba(245,158,11,0.3);color:var(--gold2);">Cash Prizes</span><span class="tag" style="border-color:rgba(245,158,11,0.3);color:var(--gold2);">Level Evidence</span>
+        </div>
+      </div>
+      <div class="card reveal" style="background:linear-gradient(135deg,rgba(16,185,129,0.14),rgba(5,150,105,0.06));border-color:rgba(16,185,129,0.25);">
+        <div style="font-size:40px;margin-bottom:16px;">🛠️</div>
+        <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">Workshops</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;">Skill-building sessions on web development, AI, cybersecurity, system design, and more. Led by experienced CodeOn members and external experts. Practical, hands-on, and directly useful.</p>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tag" style="border-color:rgba(16,185,129,0.3);color:#6ee7b7;">Web Dev</span><span class="tag" style="border-color:rgba(16,185,129,0.3);color:#6ee7b7;">AI / ML</span><span class="tag" style="border-color:rgba(16,185,129,0.3);color:#6ee7b7;">Security</span>
+        </div>
+      </div>
+      <div class="card reveal" style="background:linear-gradient(135deg,rgba(139,92,246,0.14),rgba(109,40,217,0.06));border-color:rgba(139,92,246,0.25);">
+        <div style="font-size:40px;margin-bottom:16px;">🌍</div>
+        <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">Community Projects</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;">Work on real projects with real impact in your community. From apps that solve local problems to platforms that serve thousands — CodeOn members build things that matter.</p>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tag" style="border-color:rgba(139,92,246,0.3);color:#c4b5fd;">Open Source</span><span class="tag" style="border-color:rgba(139,92,246,0.3);color:#c4b5fd;">Real Impact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI ASSISTANT SECTION -->
+  <section class="section ai-section">
+    <div class="eyebrow eyebrow-center">AI-Powered Help</div>
+    <h2 class="display text-center reveal" style="margin-bottom:12px;">Ask CodeOn AI</h2>
+    <p class="lead lead-center reveal" style="margin-bottom:48px;">Have questions about CodeOn? Our AI assistant knows everything about our community — levels, pricing, events, chapters, and more.</p>
+    <div class="ai-chat-box reveal">
+      <div class="ai-chat-head">
+        <div class="ai-head-dot"></div>
+        <div>
+          <div class="ai-head-title">CodeOn Assistant</div>
+          <div class="ai-head-sub">Powered by AI · Always available</div>
+        </div>
+      </div>
+      <div class="ai-messages" id="aiMessages"></div>
+      <div class="ai-suggestions">
+        <button class="ai-sug" onclick="aiSuggest('What is CodeOn?')">What is CodeOn?</button>
+        <button class="ai-sug" onclick="aiSuggest('How do I join?')">How to join?</button>
+        <button class="ai-sug" onclick="aiSuggest('What are the levels?')">The levels</button>
+        <button class="ai-sug" onclick="aiSuggest('How much does it cost?')">Pricing</button>
+        <button class="ai-sug" onclick="aiSuggest('Tell me about hackathons')">Hackathons</button>
+      </div>
+      <div class="ai-input-row">
+        <input class="ai-input" id="aiInput" type="text" placeholder="Ask anything about CodeOn...">
+        <button class="ai-send" onclick="sendAiMessage()">➤</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="eyebrow">Community Voices</div>
+    <h2 class="display reveal">What members say.</h2>
+    <div class="testimonials-grid">
+      <div class="tcard reveal">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"CodeOn changed how I think about my career. The level system pushed me to actually build things instead of just watching tutorials. I went from Initiate to Builder in 4 months."</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">AM</div>
+          <div><div class="tcard-name">Amara M.</div><div class="tcard-role">University Chapter · Builder</div></div>
+        </div>
+      </div>
+      <div class="tcard reveal">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"The hackathon was the hardest thing I've done — and the best. Our team won the silver prize and the experience unlocked a level for me. Nothing compares to proving yourself under pressure."</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">KO</div>
+          <div><div class="tcard-name">Kelvin O.</div><div class="tcard-role">Chapter Director · Solver</div></div>
+        </div>
+      </div>
+      <div class="tcard reveal">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"I started in high school — FREE. When I got to university and saw how serious CodeOn was, I knew I'd made the right choice. The community keeps me accountable like nothing else."</div>
+        <div class="tcard-author">
+          <div class="tcard-avatar">TP</div>
+          <div><div class="tcard-name">Tasha P.</div><div class="tcard-role">Transitioned from HS · Coder</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="text-align:center;padding:100px 72px;background:linear-gradient(135deg,rgba(0,52,200,0.14),rgba(0,198,255,0.06));border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="eyebrow eyebrow-center">Ready?</div>
+    <h2 class="display reveal" style="margin-bottom:16px;">Your level is <span class="text-ice">waiting.</span></h2>
+    <p class="lead lead-center reveal" style="margin-bottom:40px;">Join CodeOn today. High school? Free. University or professional? Affordable. The only requirement is that you show up and prove it.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;" class="reveal">
+      <button class="btn btn-primary" onclick="openAuthModal('signup')">Create Free Account →</button>
+      <button class="btn btn-gold" onclick="showPage('membership')">View Membership Plans</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <img src="logo.png" alt="CodeOn" class="footer-brand-logo">
+        <div class="footer-brand-name">Code<span>On</span></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;max-width:240px;">Bound by code, driven by purpose, connected for life. Chapters in high schools, universities, companies, and communities worldwide.</p>
+        <div class="social-links">
+          <a href="mailto:codeon.ug@gmail.com" class="social-link" title="Email">✉️</a>
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="#" class="social-link" title="GitHub">⌨</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('about')">About CodeOn</a></li>
+        <li><a onclick="showPage('levels')">Levels & Titles</a></li>
+        <li><a onclick="showPage('chapters')">Chapters</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Participate</h4><ul>
+        <li><a onclick="showPage('events')">Events</a></li>
+        <li><a onclick="showPage('gallery')">Gallery</a></li>
+        <li><a onclick="showPage('membership')">Membership</a></li>
+        <li><a onclick="showPage('contact')">Contact Us</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Account</h4><ul>
+        <li><a onclick="openAuthModal('login')">Sign In</a></li>
+        <li><a onclick="openAuthModal('signup')">Create Account</a></li>
+        <li><a onclick="goToDashboard()">Dashboard</a></li>
+        <li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 CodeOn. All rights reserved.</div>
+      <div class="footer-tagline">I Am <span>CodeOn</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: ABOUT
+═══════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="page-hero" style="background:linear-gradient(180deg,rgba(0,52,200,0.16),transparent);">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">Our Story</div>
+      <h1 class="display">We are <em style="font-style:italic;color:var(--ice);">CodeOn.</em></h1>
+      <p class="lead">A movement of coders who believe that what you build is who you are. Not your school. Not your GPA. What you have actually shipped, solved, and proved.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="about-split">
+      <div class="about-text reveal-l">
+        <p>CodeOn was built on a simple, radical idea: <strong>proof is the only currency that matters.</strong> Not certificates. Not attendance. Not potential. What you build, what you solve, what you ship.</p>
+        <p>We created a system of <strong>seven lifetime levels</strong> — from Initiate to Legend — and three earned titles that mark the rarest contributors in the community. Every stage demands evidence. Every recognition is verified.</p>
+        <p>CodeOn exists in high schools, universities, companies, and communities. We do not discriminate by institution or background. <strong>If you code, you belong.</strong> The only question is how far you are willing to go.</p>
+        <p>From two meetings a month to global hackathons — CodeOn is the structure that turns curious people into builders and builders into legends.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
+          <button class="btn btn-primary" onclick="showPage('levels')">See the Levels →</button>
+          <button class="btn btn-outline" onclick="showPage('chapters')">Find a Chapter</button>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="about-visual">
+          <img src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600&q=80" alt="Coders collaborating">
+          <div class="about-visual-overlay"></div>
+          <div class="about-visual-caption">
+            <h3>Build. Solve. Belong.</h3>
+            <p>The CodeOn identity — permanent, global, earned.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0;">
+    <div class="eyebrow">Core Values</div>
+    <h2 class="display reveal">What we stand for.</h2>
+    <div class="values-list">
+      <div class="value-item reveal"><div class="value-num">01</div><div class="value-title">Proof Over Promise</div><p class="value-desc">Every level, every title, every recognition in CodeOn is backed by real evidence. Words without results mean nothing here.</p></div>
+      <div class="value-item reveal"><div class="value-num">02</div><div class="value-title">Community is the Engine</div><p class="value-desc">CodeOn grows because members bring others, chapters birth chapters, and every person who rises makes space for the next.</p></div>
+      <div class="value-item reveal"><div class="value-num">03</div><div class="value-title">Local Problems · Global Standards</div><p class="value-desc">The problems CodeOn solves are rooted locally. The standard of how they're solved is world class. Both things are true at once.</p></div>
+      <div class="value-item reveal"><div class="value-num">04</div><div class="value-title">Growth Never Stops</div><p class="value-desc">There is no finish line. A Legend still competes. The system is designed so there is always something worth chasing.</p></div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-grid">
+      <div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose, connected for life.</p></div>
+      <div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('levels')">Levels</a></li><li><a onclick="showPage('chapters')">Chapters</a></li></ul></div>
+      <div class="footer-col"><h4>Participate</h4><ul><li><a onclick="showPage('events')">Events</a></li><li><a onclick="showPage('gallery')">Gallery</a></li><li><a onclick="showPage('membership')">Membership</a></li></ul></div>
+      <div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: LEVELS
+═══════════════════════════════ -->
+<div id="page-levels" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">The Progression System</div>
+      <h1 class="display">Seven levels.<br>One <em style="color:var(--ice);font-style:italic;">lifetime.</em></h1>
+      <p class="lead">CodeOn levels are permanent. What you earn, you keep forever. Each level is harder than the last and requires real, verifiable proof.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
+        <span class="tag">✓ Permanent</span><span class="tag">✓ Evidence-Based</span><span class="tag">✓ Community Verified</span>
+      </div>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 01</div><div class="level-icon-big">🌱</div><div class="level-name">Initiate</div></div><div class="level-right"><h4>Entry Level</h4><p>The beginning of the journey. You have made your commitment to CodeOn — paid your dues (or joined free), attended orientation, and introduced yourself to the chapter. The story starts here.</p><div class="level-tags"><span class="level-tag">Orientation Done</span><span class="level-tag">First Meeting</span><span class="level-tag">Committed</span></div></div></div>
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 02</div><div class="level-icon-big">⚡</div><div class="level-name">Coder</div></div><div class="level-right"><h4>First Proof</h4><p>The Coder has shipped something real. A project, a tool, a solution — something that runs and solves a problem. The first real proof in the CodeOn journey. No theory. Just execution.</p><div class="level-tags"><span class="level-tag">Project Submitted</span><span class="level-tag">Peer Reviewed</span><span class="level-tag">Documented</span></div></div></div>
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 03</div><div class="level-icon-big">🔥</div><div class="level-name">Builder</div></div><div class="level-right"><h4>Consistent Output</h4><p>Builders have shipped multiple projects and shown a pattern. They are reliable. They show up. They ship. The consistency distinguishes them from one-time performers.</p><div class="level-tags"><span class="level-tag">3+ Projects</span><span class="level-tag">Hackathon Participant</span><span class="level-tag">Mentored 1 Member</span></div></div></div>
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 04</div><div class="level-icon-big">🧠</div><div class="level-name">Solver</div></div><div class="level-right"><h4>Systems Thinking</h4><p>A Solver thinks in systems. They take on complex challenges, design for scale, and mentor lower-level members. The depth of their thinking is visible in every project they touch.</p><div class="level-tags"><span class="level-tag">Complex Project</span><span class="level-tag">Hackathon Placement</span><span class="level-tag">Active Mentor</span></div></div></div>
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 05</div><div class="level-icon-big">🚀</div><div class="level-name">Architect</div></div><div class="level-right"><h4>Production Quality</h4><p>The Architect designs the system, not just the feature. They have shipped production-quality software that real users use. They lead technical decisions and are looked to for direction.</p><div class="level-tags"><span class="level-tag">Production Software</span><span class="level-tag">Technical Lead</span><span class="level-tag">Chapter Contributor</span></div></div></div>
+    <div class="level-card reveal"><div class="level-left"><div class="level-num">Level 06</div><div class="level-icon-big">🌍</div><div class="level-name">Pioneer</div></div><div class="level-right"><h4>Breaking New Ground</h4><p>Pioneers are doing something for the first time in their chapter, city, or field. They are not just participating in the ecosystem — they are creating it. Rare. Respected. Irreplaceable.</p><div class="level-tags"><span class="level-tag">Novel Contribution</span><span class="level-tag">Community Impact</span><span class="level-tag">External Recognition</span></div></div></div>
+    <div class="level-card level-legend reveal"><div class="level-left"><div class="level-num">Level 07</div><div class="level-icon-big">👑</div><div class="level-name">Legend</div></div><div class="level-right"><h4>The Highest Level</h4><p>Legend is not a rank. It is a verdict. A Legend's work has changed something — in a community, an industry, or people's lives. This level is recognized by the community, for the community. It cannot be applied for.</p><div class="level-tags"><span class="level-tag">Transformative Impact</span><span class="level-tag">Community Vote</span><span class="level-tag">Lifetime Honor</span></div></div></div>
+
+    <div style="margin-top:64px;">
+      <div class="eyebrow">Special Titles</div>
+      <h2 class="display reveal">Earned. Never given.</h2>
+      <p class="lead reveal" style="margin-bottom:40px;">Beyond the seven levels, CodeOn awards three special titles — recognition for the rarest qualities in a member.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+        <div class="card reveal" style="border-top:3px solid var(--ice);">
+          <div style="font-size:40px;margin-bottom:16px;">🔵</div>
+          <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">The Contributor</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.8;">Has consistently and meaningfully contributed to the CodeOn community itself — running programs, training the next cohort, building systems others rely on.</p>
+        </div>
+        <div class="card reveal" style="border-top:3px solid #10b981;">
+          <div style="font-size:40px;margin-bottom:16px;">🟢</div>
+          <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">The Catalyst</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.8;">Changed the direction of the room. A Catalyst does not just participate — they transform. The result before them is different from the result after them.</p>
+        </div>
+        <div class="card reveal" style="border-top:3px solid var(--gold2);">
+          <div style="font-size:40px;margin-bottom:16px;">🏛️</div>
+          <h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:10px;">The Founder</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.8;">Built something from nothing — a chapter, a program, an initiative — that now thrives independently. The rarest title. The deepest honor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('chapters')">Chapters</a></li><li><a onclick="showPage('events')">Events</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: CHAPTERS
+═══════════════════════════════ -->
+<div id="page-chapters" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">The Chapter Network</div>
+      <h1 class="display">Your community.<br>Your <em style="color:var(--ice);font-style:italic;">chapter.</em></h1>
+      <p class="lead">CodeOn chapters exist wherever there are coders — in high schools, universities, companies, and communities. Each chapter is autonomous, globally connected, and held to the same standard.</p>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div class="eyebrow">Active Chapters</div>
+    <h2 class="display reveal">Where CodeOn lives.</h2>
+    <div class="chapters-grid">
+      <div class="chapter-card reveal"><span class="ch-icon">🏫</span><div class="ch-name">Kampala Central</div><div class="ch-location">High School · Kampala, Uganda</div><span class="ch-status ch-active">● Active</span></div>
+      <div class="chapter-card reveal"><span class="ch-icon">🎓</span><div class="ch-name">Makerere University</div><div class="ch-location">University · Kampala, Uganda</div><span class="ch-status ch-active">● Active</span></div>
+      <div class="chapter-card reveal"><span class="ch-icon">💼</span><div class="ch-name">Tech Hub Kampala</div><div class="ch-location">Professional · Kampala, Uganda</div><span class="ch-status ch-founding">◉ Founding</span></div>
+      <div class="chapter-card reveal"><span class="ch-icon">🎓</span><div class="ch-name">Nairobi University</div><div class="ch-location">University · Nairobi, Kenya</div><span class="ch-status ch-coming">○ Coming Soon</span></div>
+      <div class="chapter-card reveal"><span class="ch-icon">🏫</span><div class="ch-name">Kigali High School</div><div class="ch-location">High School · Kigali, Rwanda</div><span class="ch-status ch-coming">○ Coming Soon</span></div>
+      <div class="chapter-card reveal" style="cursor:pointer;border-style:dashed;" onclick="showPage('contact')"><span class="ch-icon">➕</span><div class="ch-name" style="color:var(--ice);">Start in Your City</div><div class="ch-location">Apply to bring CodeOn to you</div><span class="ch-status ch-founding" style="cursor:pointer;">→ Apply Now</span></div>
+    </div>
+    <div style="margin-top:72px;">
+      <div class="eyebrow">How Chapters Work</div>
+      <h2 class="display reveal">The structure.</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:40px;">
+        <div class="card reveal"><h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:16px;">📅 Two Monthly Meetings</h3><p style="font-size:14px;color:var(--muted);line-height:1.8;">Every chapter holds exactly two meetings per month — one in-person and one online. All meetings are FREE. They follow the CodeOn Meeting Manual for quality and consistency.</p></div>
+        <div class="card reveal"><h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:16px;">🌐 Global Standards</h3><p style="font-size:14px;color:var(--muted);line-height:1.8;">A Level 4 in Kampala means exactly the same thing as a Level 4 anywhere else. Every chapter is held to the same standards of evidence, progression, and community integrity.</p></div>
+        <div class="card reveal"><h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:16px;">🏛️ Autonomous Culture</h3><p style="font-size:14px;color:var(--muted);line-height:1.8;">Chapters have their own identity, traditions, and leadership within the CodeOn framework. You are CodeOn — and you are your chapter. Both matter equally.</p></div>
+        <div class="card reveal"><h3 style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:16px;">📋 Download Resources</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:16px;">Access the official CodeOn documents to understand the structure.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="downloadDoc('charter')">📄 CodeOn Charter</button>
+            <button class="btn btn-outline btn-sm" onclick="downloadDoc('manual')">📋 Meeting Manual</button>
+            <button class="btn btn-outline btn-sm" onclick="downloadDoc('structure')">🏛️ Org Structure</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('levels')">Levels</a></li><li><a onclick="showPage('events')">Events</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: EVENTS
+═══════════════════════════════ -->
+<div id="page-events" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">Upcoming Events</div>
+      <h1 class="display">Meetings.<br>Hackathons.<br><em style="color:var(--ice);font-style:italic;">Workshops.</em></h1>
+      <p class="lead">Every event in CodeOn is designed to push you forward. Two free meetings every month. Hackathons that test everything. Workshops that sharpen your edge.</p>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:56px;" class="reveal">
+      <div class="card" style="text-align:center;border-color:var(--border2);background:rgba(0,198,255,0.06);">
+        <div style="font-size:40px;margin-bottom:12px;">📅</div>
+        <div style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:6px;">Monthly Meetings</div>
+        <div style="font-size:13px;color:var(--muted);">2 per month · Physical + Online</div>
+        <div style="font-family:var(--mono);font-size:18px;color:var(--lime);margin-top:12px;font-weight:700;">FREE</div>
+      </div>
+      <div class="card" style="text-align:center;border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.06);">
+        <div style="font-size:40px;margin-bottom:12px;">⚡</div>
+        <div style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:6px;">Hackathons</div>
+        <div style="font-size:13px;color:var(--muted);">48-hour competitions · Cash prizes</div>
+        <div style="font-family:var(--mono);font-size:18px;color:var(--gold2);margin-top:12px;font-weight:700;">COMPETE</div>
+      </div>
+      <div class="card" style="text-align:center;border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.06);">
+        <div style="font-size:40px;margin-bottom:12px;">🛠️</div>
+        <div style="font-family:var(--head);font-size:20px;font-weight:700;margin-bottom:6px;">Workshops</div>
+        <div style="font-size:13px;color:var(--muted);">Skill-building sessions · Hands-on</div>
+        <div style="font-family:var(--mono);font-size:18px;color:#6ee7b7;margin-top:12px;font-weight:700;">LEARN</div>
+      </div>
+    </div>
+
+    <div class="eyebrow">2026 Schedule</div>
+    <h2 class="display reveal">Coming up.</h2>
+    <div class="events-list">
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">18</div><div class="event-month">Jan</div></div><div><div class="event-title">January Physical Meeting</div><div class="event-meta">📍 Chapter Venue · 2:00 PM · All members welcome</div></div><div style="display:flex;flex-direction:column;gap:8px;"><span class="event-badge badge-meeting">Meeting</span><span class="event-badge badge-free">Free</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">25</div><div class="event-month">Jan</div></div><div><div class="event-title">January Online Meeting</div><div class="event-meta">💻 Zoom / Google Meet · 3:00 PM · Global members</div></div><div style="display:flex;flex-direction:column;gap:8px;"><span class="event-badge badge-meeting">Meeting</span><span class="event-badge badge-free">Free</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">07</div><div class="event-month">Feb</div></div><div><div class="event-title">Web Development Workshop</div><div class="event-meta">🛠️ Full-Stack Series Session 1 · React + Node.js</div></div><div><span class="event-badge badge-workshop">Workshop</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">14</div><div class="event-month">Feb</div></div><div><div class="event-title">CodeOn Hackathon 2026 — Season 1</div><div class="event-meta">⚡ 48 Hours · Multi-chapter · Cash prizes + Level evidence</div></div><div><span class="event-badge badge-hackathon">Hackathon</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">22</div><div class="event-month">Feb</div></div><div><div class="event-title">February Physical Meeting</div><div class="event-meta">📍 Chapter Venue · 2:00 PM · Level reviews included</div></div><div style="display:flex;flex-direction:column;gap:8px;"><span class="event-badge badge-meeting">Meeting</span><span class="event-badge badge-free">Free</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">14</div><div class="event-month">Mar</div></div><div><div class="event-title">AI &amp; Machine Learning Workshop</div><div class="event-meta">🤖 Python · TensorFlow · Practical projects</div></div><div><span class="event-badge badge-workshop">Workshop</span></div></div>
+      <div class="event-item reveal"><div class="event-date"><div class="event-day">28</div><div class="event-month">Mar</div></div><div><div class="event-title">Q1 Level Review Day</div><div class="event-meta">📊 Level evaluations for all members · Bring your evidence</div></div><div><span class="event-badge badge-meeting">Meeting</span></div></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" class="reveal">
+      <p style="font-size:15px;color:var(--muted);margin-bottom:20px;">All meetings are free. Create an account to get event notifications and RSVP.</p>
+      <button class="btn btn-primary" onclick="openAuthModal('signup')">Join to Get Notified →</button>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('levels')">Levels</a></li><li><a onclick="showPage('chapters')">Chapters</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: GALLERY
+═══════════════════════════════ -->
+<div id="page-gallery" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;">
+      <div class="eyebrow">Photos & Videos</div>
+      <h1 class="display">CodeOn in<br><em style="color:var(--ice);font-style:italic;">action.</em></h1>
+      <p class="lead">Real moments from our meetings, hackathons, workshops, and community life. This is what belonging looks like.</p>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div class="eyebrow">Photos</div>
+    <h2 class="display reveal">Community Moments</h2>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item wide" onclick="openLightbox('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80')">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80" alt="Hackathon">
+        <div class="gallery-overlay"><div class="gallery-label">Hackathon 2025</div></div>
+      </div>
+      <div class="gallery-item tall" onclick="openLightbox('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80" alt="Team meeting">
+        <div class="gallery-overlay"><div class="gallery-label">Team Collaboration</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" alt="Coding session">
+        <div class="gallery-overlay"><div class="gallery-label">Coding Workshop</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&q=80" alt="Presentation">
+        <div class="gallery-overlay"><div class="gallery-label">Project Showcase</div></div>
+      </div>
+      <div class="gallery-item wide" onclick="openLightbox('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=1200&q=80')">
+        <img src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&q=80" alt="Workshop">
+        <div class="gallery-overlay"><div class="gallery-label">Skills Workshop</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Team">
+        <div class="gallery-overlay"><div class="gallery-label">Chapter Meeting</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80" alt="Laptop">
+        <div class="gallery-overlay"><div class="gallery-label">Late Night Build</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:72px;">
+      <div class="eyebrow">Videos</div>
+      <h2 class="display reveal">Watch CodeOn.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;">
+        <div class="card reveal" style="padding:0;overflow:hidden;cursor:pointer;" onclick="showToast('🎬','Video Coming Soon','Our video channel is launching soon. Follow us to get notified!','success')">
+          <div style="height:180px;background:linear-gradient(135deg,rgba(0,52,200,0.4),rgba(0,198,255,0.2));display:flex;align-items:center;justify-content:center;"><div style="width:56px;height:56px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;">▶</div></div>
+          <div style="padding:20px;"><div style="font-family:var(--head);font-size:16px;font-weight:700;margin-bottom:6px;">CodeOn Season 1 Recap</div><div style="font-size:13px;color:var(--muted);">Highlights from our first hackathon</div></div>
+        </div>
+        <div class="card reveal" style="padding:0;overflow:hidden;cursor:pointer;" onclick="showToast('🎬','Video Coming Soon','Our video channel is launching soon. Follow us to get notified!','success')">
+          <div style="height:180px;background:linear-gradient(135deg,rgba(245,158,11,0.3),rgba(252,211,77,0.1));display:flex;align-items:center;justify-content:center;"><div style="width:56px;height:56px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;">▶</div></div>
+          <div style="padding:20px;"><div style="font-family:var(--head);font-size:16px;font-weight:700;margin-bottom:6px;">What is a CodeOn Level?</div><div style="font-size:13px;color:var(--muted);">Explained in 3 minutes</div></div>
+        </div>
+        <div class="card reveal" style="padding:0;overflow:hidden;cursor:pointer;" onclick="showToast('🎬','Video Coming Soon','Our video channel is launching soon. Follow us to get notified!','success')">
+          <div style="height:180px;background:linear-gradient(135deg,rgba(16,185,129,0.3),rgba(5,150,105,0.1));display:flex;align-items:center;justify-content:center;"><div style="width:56px;height:56px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;">▶</div></div>
+          <div style="padding:20px;"><div style="font-family:var(--head);font-size:16px;font-weight:700;margin-bottom:6px;">Starting a Chapter</div><div style="font-size:13px;color:var(--muted);">A guide for future founders</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:72px;text-align:center;padding:60px;background:var(--glass);border:1px dashed var(--border2);border-radius:var(--radius-lg);" class="reveal">
+      <div style="font-size:48px;margin-bottom:16px;">📸</div>
+      <h3 style="font-family:var(--head);font-size:24px;font-weight:700;margin-bottom:12px;">Share Your CodeOn Moments</h3>
+      <p style="font-size:15px;color:var(--muted);max-width:480px;margin:0 auto 24px;">Are you a member with photos or videos from a CodeOn event? We'd love to feature them here. Send to codeon.ug@gmail.com.</p>
+      <a href="mailto:codeon.ug@gmail.com?subject=Gallery%20Submission" class="btn btn-outline">Submit Your Photos →</a>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('events')">Events</a></li><li><a onclick="showPage('about')">About</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: MEMBERSHIP
+═══════════════════════════════ -->
+<div id="page-membership" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">Membership Plans</div>
+      <h1 class="display">The cost of<br><em style="color:var(--ice);font-style:italic;">belonging.</em></h1>
+      <p class="lead">CodeOn membership is intentional. Fees fund the community — events, infrastructure, and the systems that make everything run. High school students always join free.</p>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <div class="pricing-top">
+          <span class="pricing-icon">🎒</span>
+          <div class="pricing-name">High School</div>
+          <div class="pricing-type">For secondary school students</div>
+          <div class="pricing-price"><span style="font-size:20px;font-weight:400;">Always</span> FREE</div>
+        </div>
+        <div class="pricing-bottom">
+          <ul class="pricing-features">
+            <li>Join any high school chapter</li>
+            <li>Attend all monthly meetings</li>
+            <li>Earn Levels 1–3</li>
+            <li>Access workshops</li>
+            <li>Participate in hackathons</li>
+            <li class="no">Professional titles</li>
+            <li class="no">Registry listing (coming)</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%;" onclick="openAuthModal('signup')">Join Free →</button>
+        </div>
+      </div>
+      <div class="pricing-card featured reveal">
+        <div class="pricing-top">
+          <span class="pricing-icon">🎓</span>
+          <div class="pricing-name">University</div>
+          <div class="pricing-type">Per trimester or semester</div>
+          <div class="pricing-price">$10 <span class="pricing-period">/ trimester</span></div>
+        </div>
+        <div class="pricing-bottom">
+          <ul class="pricing-features">
+            <li>Join any university chapter</li>
+            <li>All monthly meetings free</li>
+            <li>Full level progression (1–7)</li>
+            <li>Hackathon access + prizes</li>
+            <li>Earn earned titles</li>
+            <li>Mentorship network</li>
+            <li>Registry listing (coming)</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%;" onclick="openPaymentModal()">Activate — $10 →</button>
+        </div>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-top">
+          <span class="pricing-icon">💼</span>
+          <div class="pricing-name">Professional</div>
+          <div class="pricing-type">Per half-year (6 months)</div>
+          <div class="pricing-price">$50 <span class="pricing-period">/ 6 months</span></div>
+        </div>
+        <div class="pricing-bottom">
+          <ul class="pricing-features">
+            <li>Join company or community chapter</li>
+            <li>All monthly meetings free</li>
+            <li>Full level progression (1–7)</li>
+            <li>Industry hackathons</li>
+            <li>All earned titles</li>
+            <li>Mentorship + leadership track</li>
+            <li>Priority registry listing</li>
+          </ul>
+          <button class="btn btn-gold" style="width:100%;" onclick="openPaymentModal()">Activate — $50 →</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:80px;">
+      <div class="eyebrow">Payment</div>
+      <h2 class="display reveal">Secure payments<br>via PesaPal.</h2>
+      <p class="lead reveal">All CodeOn payments go through PesaPal — Africa's trusted payment gateway. Mobile money, cards, and bank transfers all supported.</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px;" class="reveal">
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px;">📱</div><div style="font-size:13px;font-weight:600;">MTN MoMo</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px;">📱</div><div style="font-size:13px;font-weight:600;">Airtel Money</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px;">💳</div><div style="font-size:13px;font-weight:600;">Visa</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px;">💳</div><div style="font-size:13px;font-weight:600;">Mastercard</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px;">🏦</div><div style="font-size:13px;font-weight:600;">Bank Transfer</div></div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('levels')">Levels</a></li><li><a onclick="showPage('chapters')">Chapters</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a onclick="showPage('contact')">Contact</a></li><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: CONTACT
+═══════════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div style="position:relative;z-index:1;max-width:720px;">
+      <div class="eyebrow">Get in Touch</div>
+      <h1 class="display">Let's build<br><em style="color:var(--ice);font-style:italic;">together.</em></h1>
+      <p class="lead">Whether you're ready to join, want to start a chapter, or just have a question — reach out. We respond within 24 hours.</p>
+    </div>
+  </div>
+  <section class="section" style="padding-top:0;">
+    <div class="contact-grid">
+      <div class="reveal-l">
+        <div class="contact-info-item"><div class="ci-icon">📧</div><div><div class="ci-label">Email Us</div><div class="ci-val">codeon.ug@gmail.com</div></div></div>
+        <div class="contact-info-item"><div class="ci-icon">🌍</div><div><div class="ci-label">Headquarters</div><div class="ci-val">East Africa & Global</div></div></div>
+        <div class="contact-info-item"><div class="ci-icon">⏱️</div><div><div class="ci-label">Response Time</div><div class="ci-val">Within 24 hours</div></div></div>
+        <div class="contact-info-item"><div class="ci-icon">📅</div><div><div class="ci-label">Meetings</div><div class="ci-val">Twice monthly · Always free</div></div></div>
+        <div style="margin-top:32px;">
+          <div class="eyebrow">Download Documents</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
+            <button class="btn btn-outline" onclick="downloadDoc('charter')" style="justify-content:flex-start;">📄 CodeOn Charter</button>
+            <button class="btn btn-outline" onclick="downloadDoc('manual')" style="justify-content:flex-start;">📋 Meeting Manual</button>
+            <button class="btn btn-outline" onclick="downloadDoc('structure')" style="justify-content:flex-start;">🏛️ Org Structure</button>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-box reveal-r">
+        <h3>Send a Message</h3>
+        <p>Your message goes directly to codeon.ug@gmail.com. We read every single one.</p>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Your Name</label><input class="form-input" id="contactName" type="text" placeholder="Full name"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="contactEmail" type="email" placeholder="your@email.com"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Subject</label>
+          <select class="form-select" id="contactSubject">
+            <option value="">Select a topic</option>
+            <option>I want to join CodeOn</option>
+            <option>I want to start a chapter</option>
+            <option>Question about levels/titles</option>
+            <option>Partnership / Sponsorship</option>
+            <option>Technical question</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" id="contactMessage" placeholder="Tell us what's on your mind..."></textarea></div>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send Message →</button>
+      </div>
+    </div>
+  </section>
+  <footer><div class="footer-grid"><div><img src="logo.png" alt="CodeOn" class="footer-brand-logo"><div class="footer-brand-name">Code<span>On</span></div><p style="font-size:14px;color:var(--muted);max-width:220px;">Bound by code, driven by purpose.</p></div><div class="footer-col"><h4>Navigate</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('levels')">Levels</a></li><li><a onclick="showPage('chapters')">Chapters</a></li></ul></div><div class="footer-col"><h4>Account</h4><ul><li><a onclick="openAuthModal('signup')">Join Now</a></li><li><a onclick="openAuthModal('login')">Sign In</a></li></ul></div><div class="footer-col"><h4>Connect</h4><ul><li><a href="mailto:codeon.ug@gmail.com">codeon.ug@gmail.com</a></li></ul></div></div><div class="footer-bottom"><div class="footer-copy">© 2026 CodeOn.</div><div class="footer-tagline">I Am <span>CodeOn</span></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════
+     PAGE: MEMBER DASHBOARD
+═══════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <aside class="dash-sidebar">
+      <div class="dash-profile">
+        <div class="dash-avatar" id="dashAvatar">U</div>
+        <div class="dash-name" id="dashName">Loading...</div>
+        <div class="dash-role" id="dashRole">CodeOn Member</div>
+        <div class="dash-level" id="dashLevelBadge">Level 1 · Initiate</div>
+      </div>
+      <div class="dash-nav">
+        <button class="dash-nav-item active" data-tab="overview" onclick="switchDashTab('overview')">📊 Overview</button>
+        <button class="dash-nav-item" data-tab="progress" onclick="switchDashTab('progress')">📈 My Progress</button>
+        <button class="dash-nav-item" data-tab="subscription" onclick="switchDashTab('subscription')">💳 Subscription</button>
+        <button class="dash-nav-item" data-tab="events" onclick="switchDashTab('events')">📅 Events</button>
+        <button class="dash-nav-item" data-tab="settings" onclick="switchDashTab('settings')">⚙️ Settings</button>
+        <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+        <button class="dash-nav-item" style="color:var(--error);" onclick="doLogout()">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dash-content">
+
+      <!-- OVERVIEW -->
+      <div class="dash-section active" id="dash-overview">
+        <div class="dash-greeting" id="dashGreeting">Welcome back! 👋</div>
+        <div class="dash-sub" id="dashSubText">Here's your CodeOn journey so far.</div>
+        <div class="dash-stats-grid">
+          <div class="dash-stat"><div class="dash-stat-num" id="dashLevelNum">1</div><div class="dash-stat-lbl">Current Level</div></div>
+          <div class="dash-stat"><div class="dash-stat-num" id="dashMeetings">0</div><div class="dash-stat-lbl">Meetings Attended</div></div>
+          <div class="dash-stat"><div class="dash-stat-num" id="dashType">—</div><div class="dash-stat-lbl">Member Type</div></div>
+          <div class="dash-stat"><div class="dash-stat-num" id="dashStatus">—</div><div class="dash-stat-lbl">Subscription</div></div>
+        </div>
+        <div class="dash-card">
+          <h3>🗺️ Your Journey</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">You are currently Level <span id="dashLevelNum2">1</span>. Keep attending meetings, building projects, and participating in hackathons to level up.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="showPage('levels')">View All Levels →</button>
+            <button class="btn btn-outline btn-sm" onclick="showPage('events')">Upcoming Events</button>
+          </div>
+        </div>
+        <div class="dash-card" id="dashSubBox">
+          <h3>💳 Subscription Status</h3>
+          <div class="subscription-status">
+            <div id="dashSubDot">🟡</div>
+            <div><div class="sub-label" id="dashSubLabel">Pending</div><div class="sub-detail" id="dashSubDetail">—</div></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openPaymentModal()">Activate via PesaPal →</button>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="dash-section" id="dash-progress">
+        <h2 style="font-family:var(--head);font-size:28px;font-weight:700;margin-bottom:8px;">📈 My Progress</h2>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;">Track your journey through the CodeOn level system.</p>
+        <div class="dash-card">
+          <h3>Level Progression</h3>
+          <div class="progress-bar-wrap"><div class="progress-label"><span>🌱 Initiate (L1)</span><span style="color:var(--ice);">Complete</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
+          <div class="progress-bar-wrap"><div class="progress-label"><span>⚡ Coder (L2)</span><span style="color:var(--muted);">In Progress</span></div><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div></div>
+          <div class="progress-bar-wrap"><div class="progress-label"><span>🔥 Builder (L3)</span><span style="color:var(--muted2);">Locked</span></div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+          <div class="progress-bar-wrap"><div class="progress-label"><span>🧠 Solver (L4)</span><span style="color:var(--muted2);">Locked</span></div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+          <div style="margin-top:16px;"><button class="btn btn-outline btn-sm" onclick="showPage('levels')">View Level Requirements →</button></div>
+        </div>
+        <div class="dash-card">
+          <h3>What's Next?</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.8;">To reach Level 2 (Coder), you need to submit at least one completed project for peer review. Attend the next meeting and present what you have been building.</p>
+          <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="showPage('events')">Next Meeting →</button>
+            <a href="mailto:codeon.ug@gmail.com?subject=Level%20Review%20Request" class="btn btn-outline btn-sm">Request Level Review</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBSCRIPTION -->
+      <div class="dash-section" id="dash-subscription">
+        <h2 style="font-family:var(--head);font-size:28px;font-weight:700;margin-bottom:8px;">💳 Subscription</h2>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;">Manage your CodeOn membership subscription.</p>
+        <div class="dash-card">
+          <h3>Current Plan</h3>
+          <div id="dashSubBox2" class="subscription-status" style="margin-bottom:16px;"><div>🟡</div><div><div class="sub-label">Pending Activation</div><div class="sub-detail">Complete payment to unlock full benefits</div></div></div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Payments are processed securely through PesaPal. Supports mobile money, cards, and bank transfers.</p>
+          <button class="btn btn-primary" onclick="openPaymentModal()">Activate Subscription via PesaPal →</button>
+        </div>
+        <div class="dash-card">
+          <h3>Pricing Reminder</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px;">
+            <div style="padding:16px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;text-align:center;"><div style="font-size:24px;margin-bottom:8px;">🎒</div><div style="font-family:var(--head);font-weight:700;margin-bottom:4px;">High School</div><div style="color:var(--lime);font-family:var(--mono);font-weight:700;">FREE</div></div>
+            <div style="padding:16px;background:rgba(0,198,255,0.08);border:1px solid rgba(0,198,255,0.2);border-radius:10px;text-align:center;"><div style="font-size:24px;margin-bottom:8px;">🎓</div><div style="font-family:var(--head);font-weight:700;margin-bottom:4px;">University</div><div style="color:var(--ice);font-family:var(--mono);font-weight:700;">$10/trimester</div></div>
+            <div style="padding:16px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;text-align:center;"><div style="font-size:24px;margin-bottom:8px;">💼</div><div style="font-family:var(--head);font-weight:700;margin-bottom:4px;">Professional</div><div style="color:var(--gold2);font-family:var(--mono);font-weight:700;">$50/6 months</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTS TAB -->
+      <div class="dash-section" id="dash-events">
+        <h2 style="font-family:var(--head);font-size:28px;font-weight:700;margin-bottom:8px;">📅 Upcoming Events</h2>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;">Your personalized event feed.</p>
+        <div class="dash-card">
+          <h3>Next Meeting</h3>
+          <div class="event-item" style="background:rgba(0,198,255,0.06);border-color:var(--border2);">
+            <div class="event-date"><div class="event-day">18</div><div class="event-month">Jan</div></div>
+            <div><div class="event-title">January Physical Meeting</div><div class="event-meta">📍 Chapter Venue · 2:00 PM · Free to attend</div></div>
+            <span class="event-badge badge-free">Free</span>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top:16px;" onclick="showPage('events')">View All Events →</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="dash-section" id="dash-settings">
+        <h2 style="font-family:var(--head);font-size:28px;font-weight:700;margin-bottom:8px;">⚙️ Settings</h2>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:32px;">Manage your CodeOn account.</p>
+        <div class="dash-card">
+          <h3>Account</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">To update your name, email, or password, contact us at codeon.ug@gmail.com with your request. We process account updates within 24 hours.</p>
+          <a href="mailto:codeon.ug@gmail.com?subject=Account%20Update%20Request" class="btn btn-outline btn-sm">Email Support →</a>
+        </div>
+        <div class="dash-card" style="border-color:rgba(239,68,68,0.2);">
+          <h3 style="color:var(--error);">Danger Zone</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Sign out of your CodeOn account on this device.</p>
+          <button class="btn btn-sm" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--error);" onclick="doLogout()">Sign Out</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script type="module" src="app.js"></script>
+<script>
+// Inline fallback for non-module contexts
+window.addEventListener('DOMContentLoaded', () => {
+  // Ensure splash hides
+  setTimeout(() => { document.getElementById('splash')?.classList.add('hidden'); }, 3000);
+});
+</script>
+</body>
+</html>
